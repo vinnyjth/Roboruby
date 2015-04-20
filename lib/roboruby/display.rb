@@ -1,24 +1,20 @@
-require'term/ansicolor'
-
-class String
-  include Term::ANSIColor
-end
-
 module Roboruby
   class Display
 
     def initialize(match)
       @match = match
-      @tiles ||= match.arena.map
-      @tiles.freeze
+      @tiles = match.arena.map
     end
 
     def draw
       puts
-      display_tiles = []
-      display_tiles = @tiles.clone
-      @match.bots.each do |b|
-        display_tiles[b.position.y][b.position.x] = "@".red
+      display_tiles = @tiles.deep_dup
+      puts display_tiles.class
+      puts @tiles.class
+      puts @tiles[3][1]
+      colors = %W[ red blue orange green]
+      @match.bots.each_with_index do |b, i|
+        display_tiles[b.position.y][b.position.x] = "@".send(colors[i])
       end
 
       display_tiles.each do |row|
@@ -26,7 +22,7 @@ module Roboruby
       end
 
       if DEBUG
-        puts @match.debug.each {|m| puts m }
+        @match.debug.each {|m| puts m }
       end
       
       puts
@@ -35,5 +31,5 @@ module Roboruby
       @match.debug = []
     end
 
-    end
+  end
 end

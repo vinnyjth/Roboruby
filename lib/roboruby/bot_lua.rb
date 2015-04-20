@@ -14,7 +14,7 @@ module Roboruby
         end
 
         def run(code)
-            @match.debug << @lua.eval(code).to_h
+            @lua.eval(code)
         end
 
         private 

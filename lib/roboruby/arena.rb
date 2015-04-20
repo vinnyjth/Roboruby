@@ -6,8 +6,7 @@ module Roboruby
 
         def initialize(layout=nil)
             layout_name = layout || "basic"
-            @map, @name = load_layout(layout_name)
-            @map.freeze
+            @map = load_layout(layout_name)
         end
         
         def space_valid?(x, y)
@@ -37,7 +36,7 @@ module Roboruby
             file = File.expand_path("../../../layouts/#{layout_name}.json", __FILE__)
             layout_json = File.read(file)
             data = JSON.parse(layout_json)
-            return data['layout'], data['name']
+            data['layout']
         end
 
     end

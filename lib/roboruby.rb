@@ -6,7 +6,7 @@ SPACES = {
     0 => :empty
 }
 DEBUG = true
-
+require 'roboruby/core_additions'
 require 'roboruby/match'
 require 'roboruby/arena'
 require 'roboruby/position'
