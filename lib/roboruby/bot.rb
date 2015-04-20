@@ -2,7 +2,7 @@ module Roboruby
     class Bot
 
         attr_accessor :x, :y, :name
-        attr_reader :energy, :lua, :abilities, :position, :match
+        attr_reader :energy, :lua, :abilities, :position, :match, :alive
         
         def initialize(name, energy, match)            
             @match = match
@@ -48,7 +48,6 @@ module Roboruby
         def combust!
             @alive = false
             @energy = 0
-            @match.remove_bot(@name)
         end
 
         def bounce

@@ -4,6 +4,7 @@ module Roboruby
         def initialize(match)
             @match = match
             @tiles ||= match.arena.map
+            @tiles.freeze
         end
 
         def draw
@@ -22,7 +23,6 @@ module Roboruby
                 puts @match.debug.each {|m| puts m }
             end
             
-            puts @tiles
             puts
             puts "--------------------------"
 

@@ -6,7 +6,8 @@ module Roboruby
 
         def initialize(layout=nil)
             layout_name = layout || "basic"
-            @map, @name = load_layout(layout_name) 
+            @map, @name = load_layout(layout_name)
+            @map.freeze
         end
         
         def space_valid?(x, y)
