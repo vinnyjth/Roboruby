@@ -38,6 +38,11 @@ module Roboruby
         def push_other
             
         end 
+        
+        def position=(pos={})
+          @x = pos[:x]
+          @y = pos[:y]
+        end
 
         def space_valid?
             @arena.space_valid?(@x, @y)
