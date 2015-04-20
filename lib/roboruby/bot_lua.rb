@@ -33,7 +33,17 @@ module Roboruby
             end
 
             @lua.function "up" do |amount|
-                @bot.move(0, amount)
+                @bot.move!(0, amount.to_i)
+            end
+
+            @lua.function "get_energy" do
+                @bot.check_energy
+            end
+
+            @bot.abilities.each do |key, ability|
+                @lua.function ability.command do |*args|
+                    ability.perform(*args)
+                end
             end
 
         end
