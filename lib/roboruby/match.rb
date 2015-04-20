@@ -8,10 +8,15 @@ module Roboruby
             @bots = []
             @debug = []
             @arena = arena
+            @display = Roboruby::Display.new(self)
         end
         
         def start
             play                    
+        end
+
+        def draw
+            @display.draw
         end
     
         def add_bot(bot)

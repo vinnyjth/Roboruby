@@ -12,8 +12,7 @@ module Roboruby
             @bots.each do |bot|
                 bot.do_turn
             end
-            Roboruby::Display.draw(@match)
-            @match.debug = []
+            @match.draw
         end
 
     end

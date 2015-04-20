@@ -9,15 +9,12 @@ module Roboruby
         def initialize(bot) 
             @lua = Rufus::Lua::State.new
             @bot = bot
+            @match = bot.match
             setup_functions
         end
 
-        def match
-            @match ||= bot.match
-        end
-
         def run(code)
-            @lua.eval(code) 
+            @lua.eval code
         end
 
         private 

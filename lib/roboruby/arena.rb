@@ -19,8 +19,8 @@ module Roboruby
         end
 
         def space_at(x, y)
-            unless space_nil?(x, ydd)
-                space = @map[y][x]
+            unless space_nil?(x, y)
+                @map[y][x]
             else
                 nil
             end
