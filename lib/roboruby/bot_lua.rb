@@ -17,7 +17,7 @@ module Roboruby
         end
 
         def run(code)
-            @lua.eval code 
+            @lua.eval(code) 
         end
 
         private 
@@ -25,15 +25,31 @@ module Roboruby
         def setup_functions
             
             @lua.function "get_self_pos" do
-                @bot.position
+                @bot.position.point
             end
 
             @lua.function "get_bot_pos" do |bot_name|
-                @match.get_bot(bot_name).position
+                @match.get_bot(bot_name).position.point
+            end
+
+            @lua.function "get_tile_at_pos" do |x, y|
+                @match.arena.space_type(x, y).to_s
             end
 
             @lua.function "up" do |amount|
+                @bot.move!(0, (amount.to_i)*-1)
+            end
+
+            @lua.function "down" do |amount|
                 @bot.move!(0, amount.to_i)
+            end
+
+            @lua.function "left" do |amount|
+                @bot.move!((amount * -1).to_i, 0)
+            end
+
+            @lua.function "right" do |amount|
+                @bot.move!(amount.to_i, 0)
             end
 
             @lua.function "get_energy" do

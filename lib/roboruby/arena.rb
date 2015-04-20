@@ -11,20 +11,23 @@ module Roboruby
         
         def space_valid?(x, y)
             return false if space_nil?(x, y)
-            space_at(x, y).in VALIDSPACES 
+            VALIDSPACES.include? space_at(x, y)
         end
 
         def space_nil?(x, y)
-            y > @map.length || x > @map[y]
+            y > @map.length || x > @map[y].length
         end
 
         def space_at(x, y)
-            @map[y][x]
+            unless space_nil?(x, ydd)
+                space = @map[y][x]
+            else
+                nil
+            end
         end
 
         def space_type(x, y)
-            return :empty if space_nil?(x, y)
-            SPACES[space_at(x, y)] || :empty
+            SPACES[space_at(x, y)] || :void
         end
 
         private

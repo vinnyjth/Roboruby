@@ -5,6 +5,7 @@ module Roboruby
         def initialize(arena, bot, initial_pos=nil)
             @arena = arena
             @bot = bot
+            @match = bot.match
             if initial_pos
                 @x = initial_pos[:x]
                 @y = initial_pos[:y]
@@ -55,7 +56,7 @@ module Roboruby
         end
 
         def  self.get_bot_at(x, y)
-            
+           @match.bots.find {|b| b.position.point == {x: x, y: y} } 
         end
     end
 end

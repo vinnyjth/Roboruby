@@ -2,7 +2,7 @@ module Roboruby
     class Bot
 
         attr_accessor :x, :y, :name
-        attr_reader :energy, :lua, :abilities, :position
+        attr_reader :energy, :lua, :abilities, :position, :match
         
         def initialize(name, energy, match)            
             @match = match
@@ -14,10 +14,11 @@ module Roboruby
             @script = Roboruby::Script.new(name)
             @alive = true
             @name = name
+            @match.add_bot(self)
         end
 
         def move!(x_delta, y_delta)
-            return @position if check_out_of_energy?
+            return @position.point if energy_depleted?
             @position.move_relative!(x_delta, y_delta)
             use_energy(x_delta + y_delta)
             handle_collision unless @position.space_valid?             
@@ -26,11 +27,10 @@ module Roboruby
 
         def do_turn
             @lua.run @script.body
-            combust! if check_out_of_energy?
             regain_energy
         end
         
-        def check_out_of_energy?
+        def energy_depleted?
             @energy <= 0
         end
         
@@ -62,8 +62,6 @@ module Roboruby
         end
 
         def regain_energy
-            puts @energy
-            puts @regain_amount
             @energy += @regain_amount
         end
 
