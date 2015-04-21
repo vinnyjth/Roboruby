@@ -20,8 +20,7 @@ module Roboruby
     def move_relative!(x_delta, y_delta, stop_on_collision=true)
       x = @x + x_delta
       y = @y + y_delta
-      points = RoboMath.points_in_line({x:@x, y:@y}, {x:x, y:y}).dup
-      puts points
+      points = RoboMath.points_in_line({x:@x, y:@y}, {x:x, y:y})
       if stop_on_collision 
         points.each do |p|
           return move!(p) if space_invalid?
@@ -32,11 +31,12 @@ module Roboruby
     end
 
     def move!(pos)
-      puts caller[0]
       @old_x = @x
       @old_y = @y
       @x = pos[:x]
       @y = pos[:y]
+      puts point
+      point
     end
 
     def revert!
