@@ -9,9 +9,6 @@ module Roboruby
     def draw
       puts
       display_tiles = @tiles.deep_dup
-      puts display_tiles.class
-      puts @tiles.class
-      puts @tiles[3][1]
       colors = %W[ red blue orange green]
       @match.bots.each_with_index do |b, i|
         display_tiles[b.position.y][b.position.x] = "@".send(colors[i])
@@ -24,11 +21,10 @@ module Roboruby
       if DEBUG
         @match.debug.each {|m| puts m }
       end
+      puts @match.debug
       
       puts
       puts "--------------------------"
-
-      @match.debug = []
     end
 
   end
