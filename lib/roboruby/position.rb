@@ -37,10 +37,9 @@ module Roboruby
 
     # Needs a more detailed implementation
     def push_other
-      puts "pushing"
       v ||= velocity
       bots.each do |b|
-        b.move_relative v[:x], v[:y]
+        b.position.move_relative!(v[:x], v[:y])
       end
     end 
 
@@ -54,8 +53,7 @@ module Roboruby
     end
 
     def space_occupied?
-      puts self.bots
-      return self.bots.any?
+      bots.any?
     end
 
     def point
@@ -79,8 +77,7 @@ module Roboruby
     end
 
     def bots
-      puts 'Looking .  .  '
-      (Position.get_bots_at(@x, @y, @match)) || []
+      (Position.get_bots_at(@x, @y, @match) || []).reject{ |b| b == @bot }
     end
 
     # TODO: This should really be an arena instance method.

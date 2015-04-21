@@ -1,19 +1,19 @@
 module Roboruby
-    class Turn
-        
-        def initialize(match)
-            @match = match
-            @bots = match.bots
-            run
-        end
+  class Turn
 
-    
-        def run
-            @bots.each do |bot|
-                bot.do_turn
-            end
-            @match.draw
-        end
-
+    def initialize(match)
+      @match = match
+      @bots = match.bots
+      run
     end
+
+
+    def run
+      @bots.each do |bot|
+        bot.do_turn
+      end
+      @match.draw
+    end
+
+  end
 end

@@ -22,10 +22,7 @@ module Roboruby
       @position.move_relative!(x_delta, y_delta)
       use_energy(x_delta + y_delta)
       handle_tile_collision unless @position.space_valid?
-      puts @position.space_occupied?
       handle_bot_collision if @position.space_occupied?
-      puts @position.space_occupied?
-      puts "Space for #{name} occupied?"      
       @position.point
     end
 
@@ -46,7 +43,7 @@ module Roboruby
     end
 
     def push_other
-      @poisition.push_other
+      @position.push_other
     end
 
     def combust!
@@ -78,7 +75,7 @@ module Roboruby
     end
 
     def handle_bot_collision
-      push_other 
+      push_other
     end
 
   end
