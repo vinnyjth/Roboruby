@@ -23,4 +23,12 @@ directions['up_dir']    = get_tile_at_pos(x, dir_up)
 directions['down_dir']  = get_tile_at_pos(x, dir_down)
 directions['left_dir']  = get_tile_at_pos(dir_left, x)
 directions['right_dir'] = get_tile_at_pos(dir_right, x)
+
+memory = get_memory()
+if memory['times'] == nil then
+  memory['times'] = 0
+end
+memory['times'] = memory['times'] + 1
+
+set_memory(memory)
 return directions 

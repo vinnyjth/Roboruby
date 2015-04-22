@@ -7,3 +7,5 @@ b1.position.position = {y: 1, x: 4}
 20.times do 
     Roboruby::Turn.new(m)
 end
+
+puts b0.memory

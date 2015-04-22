@@ -22,11 +22,7 @@ class RoboMath
     deltay = (y1-y0).abs
     error = (deltax / 2).to_i
     y = y0
-    if y0 < y1
-      ystep = 1
-    else
-      ystep = -1
-    end
+    ystep = y0 < y1 ? 1 : -1
     for x in x0..x1
       if steep
         points << {:x => y, :y => x}

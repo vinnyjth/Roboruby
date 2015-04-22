@@ -20,7 +20,15 @@ module Roboruby
         private 
 
         def setup_functions
-            
+
+            @lua.function "set_memory" do |memory|
+              @bot.memory = memory.to_h
+            end
+
+            @lua.function "get_memory" do |memory|
+              @bot.memory || {}
+            end
+
             @lua.function "get_self_pos" do
                 @bot.position.point
             end

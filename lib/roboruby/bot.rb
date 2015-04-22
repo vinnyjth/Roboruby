@@ -1,7 +1,7 @@
 module Roboruby
   class Bot
 
-    attr_accessor :x, :y, :name
+    attr_accessor :x, :y, :name, :memory
     attr_reader :energy, :lua, :abilities, :position, :match, :alive
 
     def initialize(name, energy, match)            
@@ -14,6 +14,7 @@ module Roboruby
       @script = Roboruby::Script.new(name)
       @alive = true
       @name = name
+      @memory = {}
       @match.add_bot(self)
     end
 
