@@ -20,7 +20,6 @@ module Roboruby
     def move!(x_delta, y_delta)
       return @position.point if energy_depleted?
       @position.move_relative!(x_delta, y_delta, false)
-      puts "MMoving"
       use_energy(x_delta + y_delta)
       handle_tile_collision if @position.space_invalid?
       handle_bot_collision  if @position.space_occupied?

@@ -21,6 +21,7 @@ module Roboruby
       x = @x + x_delta
       y = @y + y_delta
       points = RoboMath.points_in_line({x:@x, y:@y}, {x:x, y:y})
+      puts points.join(" ")
       if stop_on_collision 
         points.each do |p|
           return move!(p) if space_invalid?
@@ -35,7 +36,6 @@ module Roboruby
       @old_y = @y
       @x = pos[:x]
       @y = pos[:y]
-      puts point
       point
     end
 
@@ -46,6 +46,7 @@ module Roboruby
 
     # Needs a more detailed implementation
     def push_other
+      puts "Pushing other"
       v ||= velocity
       bots.each do |b|
         b.position.move_relative!(v[:x], v[:y])
