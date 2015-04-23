@@ -20,7 +20,7 @@ module Roboruby
 
     def move!(x_delta, y_delta)
       return @position.point if energy_depleted?
-      @position.move_relative!(x_delta, y_delta, false)
+      @position.move_relative!(x_delta, y_delta, true)
       use_energy(x_delta + y_delta)
       handle_tile_collision if @position.space_invalid?
       handle_bot_collision  if @position.space_occupied?
@@ -67,6 +67,7 @@ module Roboruby
     end
 
     def handle_tile_collision
+      puts "fing tiles"
       case position.type
       when :deadly
         combust!
@@ -76,6 +77,7 @@ module Roboruby
     end
 
     def handle_bot_collision
+      puts "Fing bots"
       push_other
     end
 

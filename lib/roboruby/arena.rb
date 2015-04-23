@@ -15,7 +15,7 @@ module Roboruby
     end
 
     def space_nil?(x, y)
-      y > @map.length || x > @map[y].length
+      y > @map.length || @map[y].nil?
     end
 
     def space_at(x, y)

@@ -1,47 +1,40 @@
 module Roboruby
   class Position
-    attr_reader :x, :y
+    attr_reader :x, :y, :pos
 
-    def initialize(arena, bot, initial_pos=nil)
+    def initialize(arena, bot, initial_pos={})
       @arena = arena
       @bot = bot
       @match = bot.match
-      if initial_pos
-        @x = initial_pos[:x]
-        @y = initial_pos[:y]
-      else 
-        @x = 1
-        @y = 1
+      if initial_pos.any?
+        @pos = initial_pos
+      else
+        @pos = {x: 1, y:1}
       end
-      @old_x = @x
-      @old_y = @y
     end
 
     def move_relative!(x_delta, y_delta, stop_on_collision=true)
-      x = @x + x_delta
-      y = @y + y_delta
-      points = RoboMath.points_in_line({x:@x, y:@y}, {x:x, y:y})
-      puts points.join(" ")
+      x = @pos[:x] + x_delta
+      y = @pos[:y] + y_delta
+      points = RoboMath.points_in_line(@pos, {x:x, y:y})
+      points.shift
       if stop_on_collision 
         points.each do |p|
           return move!(p) if space_invalid?
-          return move!(p) if space_occupied? 
+          return move!(p) if space_occupied?
         end
       end
       move!(points.last)
     end
 
     def move!(pos)
-      @old_x = @x
-      @old_y = @y
-      @x = pos[:x]
-      @y = pos[:y]
+      @old_pos = @pos
+      @pos = pos
       point
     end
 
     def revert!
-      @x = @old_x
-      @y = @old_y
+      @pos = @old_pos
     end
 
     # Needs a more detailed implementation
@@ -54,12 +47,13 @@ module Roboruby
     end 
 
     def position=(pos={})
-      @x = pos[:x]
-      @y = pos[:y]
+      @pos = pos
     end
 
     def space_valid?
-      @arena.space_valid?(@x, @y)
+      x = @pos[:x] 
+      y = @pos[:y]
+      @arena.space_valid?(x, y)
     end
 
     def space_invalid?
@@ -71,15 +65,12 @@ module Roboruby
     end
 
     def point
-      {x: @x, y: @y}
+      @pos 
     end
 
     def velocity
-      x_vel = @x - @old_x
-      y_vel = @y - @old_y
-      {x: x_vel, y: y_vel}
+      @pos.merge(@old_pos){ |k, old_val, new_val| old_val - new_val}
     end
-
 
     # TODO: This isn't true 
     def deadly?
@@ -91,12 +82,20 @@ module Roboruby
     end
 
     def bots
-      (Position.get_bots_at(@x, @y, @match) || []).reject{ |b| b == @bot }
+      (Position.get_bots_at(@pos, @match) || []).reject{ |b| b == @bot }
+    end
+
+    def x
+      @pos[:x]
+    end
+    
+    def y
+      @pos[:y]
     end
 
     # TODO: This should really be an arena instance method.
-    def self.get_bots_at(x, y, match)
-        match.bots.find_all {|b| b.position.point == {x: x, y: y} } 
+    def self.get_bots_at(pos, match)
+        match.bots.find_all {|b| b.position.point == pos } 
     end
 
   end

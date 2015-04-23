@@ -8,13 +8,11 @@ class RoboMath
     points = []
     steep = ((y1-y0).abs) > ((x1-x0).abs)
     if steep
-      puts "You dun goofed"
       x0,y0 = y0,x0
       x1,y1 = y1,x1
     end
     flip = x0 > x1  
     if flip
-      puts "Flippen"
       x0,x1 = x1,x0
       y0,y1 = y1,y0
     end
