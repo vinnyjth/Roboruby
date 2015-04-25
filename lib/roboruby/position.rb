@@ -17,9 +17,9 @@ module Roboruby
       x = @pos[:x] + x_delta
       y = @pos[:y] + y_delta
       points = RoboMath.points_in_line(@pos, {x:x, y:y})
-      points.shift
       if stop_on_collision 
-        points.each do |p|
+        points.each_with_index do |p, i|
+          @old_pos = points[i-1] unless i == 0
           return move!(p) if space_invalid?
           return move!(p) if space_occupied?
         end

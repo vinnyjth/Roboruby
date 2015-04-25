@@ -18,16 +18,16 @@ dir_up = y - 1
 dir_down = y + 1
 
 if get_tile_at_pos(x, dir_down) ~= "empty" and get_tile_at_pos(dir_right, y) == "empty" then
-    right(2)
+    right(1)
     memory['right'] = 1
 elseif get_tile_at_pos(dir_right, y) ~= "empty" and get_tile_at_pos(x, dir_up) == "empty" then
-    up(2)
+    up(1)
     memory['up'] = 1
 elseif get_tile_at_pos(dir_left, y) ~= "empty" and get_tile_at_pos(x, dir_down) == "empty" then
-    down(2)
+    down(1)
     memory['down'] = 1
 else 
-    left(2)
+    left(1)
     memory['left'] = 1
 end
 

@@ -41,6 +41,10 @@ module Roboruby
                 @match.arena.space_type(x, y).to_s
             end
 
+            @lua.function "get_bot_at_pos" do |x, y|
+                
+            end
+
             @lua.function "up" do |amount|
                 @bot.move!(0, (amount.to_i)*-1)
             end
