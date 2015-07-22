@@ -18,5 +18,6 @@ require 'roboruby/bot'
 require 'roboruby/bot_lua'
 require 'roboruby/runner'
 require 'roboruby/display'
+require 'roboruby/turn_display'
 
 require 'roboruby/abilities/base'

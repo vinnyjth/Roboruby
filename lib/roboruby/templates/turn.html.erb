@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      div.tile {
+        width: 100px;
+        height: 100px;
+        display: inline-block;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="body">
+      <% @turns.each do |turn| %>
+          <% turn.each do |row| %>
+            <% row.each do |tile| %>
+              <div class="tile" style="background-color: <%= tile_to_color(tile) %>;"></div>
+            <% end %>
+            <br />
+          <% end %>
+      <% end %>
+    </div>
+  </body>
+</html>

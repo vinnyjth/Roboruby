@@ -1,3 +1,6 @@
+require "erb"
+
+# This class is awful REFACTOR
 module Roboruby
   class Display
 
@@ -10,7 +13,7 @@ module Roboruby
       puts
       display_tiles = @tiles.deep_dup
       colors = %W[ red blue orange green]
-      display_tiles = display_tiles.map { |r| r.map { |c| c == 0 ? " " : "="} } 
+      display_tiles = display_tiles.map { |r| r.map { |c| c == 0 ? " " : "="} }
       @match.bots.each_with_index do |b, i|
         display_tiles[b.position.y][b.position.x] = "@".send(colors[i])
       end
@@ -23,7 +26,7 @@ module Roboruby
         @match.debug.each {|m| puts m }
       end
       puts @match.debug
-      
+
       puts
       puts "--------------------------"
     end
