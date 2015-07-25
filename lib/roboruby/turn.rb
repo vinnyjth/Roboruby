@@ -15,7 +15,7 @@ module Roboruby
       @bots.each do |bot|
         bot.do_turn
       end
-      @match.draw
+      @match.increment_turn_count
     end
 
   end

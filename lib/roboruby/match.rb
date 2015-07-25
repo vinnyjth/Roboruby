@@ -1,18 +1,23 @@
 module Roboruby
-  class Match 
-       
+  class Match
+
     attr_accessor :debug
-    attr_reader :arena, :bots
+    attr_reader :arena, :bots, :turn_count
 
     def initialize(arena)
       @bots = []
       @debug = []
       @arena = arena
       @display = Roboruby::Display.new(self)
+      @turn_count = 0
     end
-    
+
     def start
-      play                    
+      play
+    end
+
+    def increment_turn_count
+      @turn_count += 1
     end
 
     def draw
@@ -32,14 +37,14 @@ module Roboruby
       @bots.delete find_bot(name)
     end
 
-    private 
+    private
 
     def play
       active = true
 
       while active
           turn = Roboruby::Turn.new(self)
-          turn = nil 
+          turn = nil
           winner = check_for_winner
           active = true unless winner.present?
       end

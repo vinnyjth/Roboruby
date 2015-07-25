@@ -1,33 +1,34 @@
 require 'json'
-module Roboruby 
+module Roboruby
   class Arena
 
-    attr_reader :map, :name
+    attr_reader :map, :name, :friction
 
     def initialize(layout=nil)
       layout_name = layout || "basic"
       @map = load_layout(layout_name)
+      @friction = 0.70
     end
 
-    def space_valid?(x, y)
-      return false if space_nil?(x, y)
-      VALIDSPACES.include? space_at(x, y)
+    def space_valid?(position)
+      return false if space_nil?(position)
+      VALIDSPACES.include? space_at(position)
     end
 
-    def space_nil?(x, y)
-      y > @map.length || @map[y].nil?
+    def space_nil?(position)
+      position[:y] > @map.length || @map[position[:y]].nil? || position[:y] < 0
     end
 
-    def space_at(x, y)
-      unless space_nil?(x, y)
-        @map[y][x]
+    def space_at(position)
+      unless space_nil?(position)
+        @map[position[:y]][position[:x]]
       else
         nil
       end
     end
 
-    def space_type(x, y)
-      SPACES[space_at(x, y)] || :void
+    def space_type(position)
+      SPACES[space_at(position)] || :void
     end
 
     private

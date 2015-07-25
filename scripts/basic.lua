@@ -17,18 +17,10 @@ dir_right = x + 1
 dir_up = y - 1
 dir_down = y + 1
 
-if get_tile_at_pos(x, dir_down) ~= "empty" and get_tile_at_pos(dir_right, y) == "empty" then
-    right(1)
-    memory['right'] = 1
-elseif get_tile_at_pos(dir_right, y) ~= "empty" and get_tile_at_pos(x, dir_up) == "empty" then
-    up(1)
-    memory['up'] = 1
-elseif get_tile_at_pos(dir_left, y) ~= "empty" and get_tile_at_pos(x, dir_down) == "empty" then
-    down(1)
-    memory['down'] = 1
-else 
-    left(1)
-    memory['left'] = 1
+if get_tile_in_front() ~= "empty" then
+  left()
+else
+  forward()
 end
 
 directions = {}
@@ -39,4 +31,4 @@ directions['left_dir']  = get_tile_at_pos(dir_left, x)
 directions['right_dir'] = get_tile_at_pos(dir_right, x)
 
 set_memory(memory)
-return directions 
+return get_tile_in_front()

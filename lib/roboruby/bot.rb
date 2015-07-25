@@ -1,11 +1,14 @@
 module Roboruby
   class Bot
 
-    attr_accessor :x, :y, :name, :memory
+    attr_accessor :x, :y, :name, :memory, :acceleration_rate, :rotation_speed
     attr_reader :energy, :lua, :abilities, :position, :match, :alive
 
-    def initialize(name, energy, match)            
+    def initialize(name, energy, match, opts = {})
+      defaults = {speed: 0.0, rotation_speed: Math::PI/2}
+      opts = defaults.merge(opts)
       @match = match
+      @arena = match.arena
       @position = Roboruby::Position.new(match.arena, self)
       @energy = energy
       @regain_amount = 0
@@ -15,20 +18,35 @@ module Roboruby
       @alive = true
       @name = name
       @memory = {}
+      @acceleration_rate = opts[:speed]
+      @rotation_speed = opts[:rotation_speed]
       @match.add_bot(self)
     end
 
-    def move!(x_delta, y_delta)
-      return @position.point if energy_depleted?
-      @position.move_relative!(x_delta, y_delta, true)
-      use_energy(x_delta + y_delta)
-      handle_tile_collision if @position.space_invalid?
-      handle_bot_collision  if @position.space_occupied?
-      @position.point
+    def move_forward(speed)
+      @acceleration_rate = speed
+    end
+
+    def brake
+      @position.stop
+    end
+
+    def turn_left
+      @position.calculate_turn_left((1.0/2.0)*Math::PI)
+    end
+
+    def turn_right
+      @position.calculate_turn_left((1.0/2.0)*Math::PI)
+    end
+
+    def tile_in_front
+      @arena.space_type(@position.space_in_front)
     end
 
     def do_turn
-      @lua.run @script.body
+      puts @lua.run @script.body
+      puts name
+      update_position
       regain_energy
     end
 
@@ -39,12 +57,16 @@ module Roboruby
     def add_abilities!(*new_abilities)
       new_abilities.each do |ability|
         klass = Object.const_get("Roboruby::Abilities::#{ability}").new(self)
-        @abilities[klass.name] = klass 
+        @abilities[klass.name] = klass
       end
     end
 
     def push_other
       @position.push_other
+    end
+
+    def update_position
+      @position.update_position
     end
 
     def combust!
@@ -66,6 +88,10 @@ module Roboruby
       @energy += @regain_amount
     end
 
+    def halt
+      @position.halt
+    end
+
     def handle_tile_collision
       puts "fing tiles"
       case position.type
@@ -78,7 +104,7 @@ module Roboruby
 
     def handle_bot_collision
       puts "Fing bots"
-      push_other
+      halt!
     end
 
   end
